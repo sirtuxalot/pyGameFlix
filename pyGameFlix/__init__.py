@@ -60,7 +60,7 @@ def index():
   logging.debug("***** checking seed data *****")
   #seed_tables()
   # login process
-  return render_template('index.html', displayName=session['displayName'])
+  return render_template('index.html')
 
 @app.route('/logout', methods=['POST'])
 def logout():
