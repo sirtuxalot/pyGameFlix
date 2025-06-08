@@ -9,6 +9,6 @@ from flask import Blueprint
 
 users_bp = Blueprint('users', __name__)
 
-@catalog_bp.route('/')
+@users_bp.route('/')
 def index():
   pass
