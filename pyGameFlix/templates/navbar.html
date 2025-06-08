@@ -1,7 +1,7 @@
   <nav class="navbar navbar-default navbar-expand-lg">
     <div class="container-fluid">
       <form>
-        <img src={{ url_for('static', filename='img/python.png') }}> GameFlix
+        <img src={{ url_for('static', filename='img/python.png') }}> pyGameFlix
       </form>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -29,18 +29,13 @@
            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
          </li>
         </ul>
-        <form class="d-flex" role="search">
+        <!--<form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
           <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>-->
+        <form method="POST" action="{{ url_for('logout') }}">
+          <button class="btn btn-danger" type="submit">LogOut</button>
         </form>
       </div>
-      <!-- <form method="POST" action="{{ url_for('search') }}" class="d-flex" role="search">
-        {{ form.hidden_tag() }}
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search", name="search_field">
-        <button class="btn btn-outline-primary" type="submit">Search</button>
-      </form> -->
-      <form method="POST" action="{{ url_for('logout') }}">
-        <button class="btn btn-danger" type="submit">LogOut</button>
-      </form>
     </div>
   </nav>
