@@ -28,7 +28,7 @@ class subscriptions(db.Model):
 
 class catalog(db.Model):
   __tablename__ = 'catalog'
-  game_id = db.Colmumn(db.Integer, primary_key=True)
+  game_id = db.Column(db.Integer, primary_key=True)
   game_name = db.Column(db.Text)
   console_id = db.Column(db.Integer, db.ForeignKey('consoles.console_id'))
   renter_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
