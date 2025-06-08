@@ -4,7 +4,7 @@
 import pyGameFlix.seed_data
 # external imports
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, session
+from flask import Flask, redirect, render_template, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import logging
