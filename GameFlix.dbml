@@ -1,0 +1,65 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+table users {
+  user_id int [primary key]
+  first_name string
+  last_name string
+  email string
+  address string
+  city string
+  state string
+  zip int
+  password string
+  subscription_id int
+  access_level int
+}
+
+table subscriptions {
+  subscription_id int [primary key]
+  subscription_name string
+  rentals_allowed int
+  price string
+}
+
+table consoles {
+  console_id int [primary key]
+  console_name string
+}
+
+table catalog {
+  game_id int [primary key]
+  game_name string
+  console_id int
+  renter_id int
+}
+
+// table wishlist {
+//   user_id int
+//   game_id int
+//   date_added timestamp
+// }
+
+// table rental_history {
+//   user_id int
+//   game_id int
+//   date_rented timestamp
+// }
+
+// table reviews {
+//   user_id int
+//   game_id int
+//   date_reviewed timestamp
+//   review text
+// }
+
+Ref: subscriptions.subscription_id < users.subscription_id
+Ref: consoles.console_id < catalog.console_id
+Ref: users.user_id < catalog.renter_id
+
+//Ref: users.user_id < wishlist.user_id
+//Ref: games.game_id < wishlist.game_id
+//Ref: users.user_id < rental_history.user_id
+//Ref: games.game_id < rental_history.game_id
+//Ref: users.user_id < reviews.game_id
+//Ref: games.game_id < reviews.user_id
