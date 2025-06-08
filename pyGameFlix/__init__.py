@@ -14,15 +14,15 @@ import os
 load_dotenv()
 
 # application settings
-app = Flask(__name__), static_folder='static', static_url_path='/pyGameFlix/static')
+app = Flask(__name__, static_folder='static', static_url_path='/pyGameFlix/static')
 
 # checking for virtual environment
 venv_var = os.getenv('VIRTUAL_ENV', default=None)
 if venv_var is not None:
-  logging.basicConfig=logging.DEBUG
+  logging.basicConfig(level=logging.DEBUG)
   logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
   logging.info('***** Debug Logging: on *****')
-else
+else:
   logging.basicConfig=logging.INFO
 
 # CSRF Token
@@ -55,9 +55,10 @@ def seed_tables():
     seed_data.seed_consoles(db, consoles)
 
 @app.route('/', methods=['GET', 'POST'])
+def index():
   # seed data
   logging.debug("***** checking seed data *****")
-  seed_tables()
+  #seed_tables()
   # login process
   return render_template('index.html', displayName=session['displayName'])
 
