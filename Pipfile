@@ -12,6 +12,8 @@ werkzeug = "*"
 dotenv = "*"
 wtforms = "*"
 pymysql = "*"
+flask-mysqldb = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 cffi = "*"
