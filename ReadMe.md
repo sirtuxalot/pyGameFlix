@@ -2,6 +2,9 @@
 
 ## Structure
 
+- Site describing [Flask using MVC architecture](https://plainenglish.io/blog/flask-crud-application-using-mvc-architecture)
+- Example Code repo of [Flask using MVC architecture](https://github.com/sheetalkumar105/flaskmvc)
+
 - APP_ROOT: 
     - contains application start up scripts (main.py)
     - application dependency records (Pipfile, Pipfile.lock, requirements.txt)
