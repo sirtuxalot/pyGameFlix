@@ -1,6 +1,9 @@
-# models.py
+# models/models.py
 
-from pyGameFlix import db
+# external imports
+from flask_sqlalchemy import SQLAlchemy
+
+db=SQLAlchemy()
 
 ## supporting tables
 
@@ -51,4 +54,3 @@ class users(db.Model):
   password = db.Column(db.Text)
   subscription_id = db.Column(db.Integer, db.ForeignKey('subscriptions.subscription_id'))
   access_level = db.Column(db.Integer)
-  
