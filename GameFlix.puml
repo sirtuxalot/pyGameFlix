@@ -1,5 +1,57 @@
 @startuml
-'https://plantuml.com/class-diagram
+'https://plantuml.com/component-diagram
 
+component [uwsgi] #red
+
+component [pyGameFlix] #yellow
+
+skinparam node {
+  backgroundColor green
+}
+
+database "PostgreSQL" {
+  frame "catalog" {
+  }
+  frame "consoles" {
+  }
+  frame "subscriptions" {
+  }
+  frame "users" {
+  }
+}
+
+package "MicroServices" {
+  node pyGFAccess
+  node pyGFAdmin
+  node pyGFCatalog
+  node pyGFUsers
+}
+
+package "pyGFAccess APIs" {
+  node "[GET, POST] /register" as register
+  node "[GET, POST] /login" as login
+  node "/logout" as logout
+}
+
+[uwsgi] --> [pyGameFlix]
+[pyGameFlix] --> [pyGFAdmin]
+[pyGameFlix] --> [pyGFCatalog]
+[pyGameFlix] --> [pyGFAccess]
+[pyGameFlix] --> [pyGFUsers]
+[pyGFAdmin] ..> [catalog]
+[pyGFAdmin] ..> [consoles]
+[pyGFAdmin] ..> [subscriptions]
+[pyGFAdmin] ..> [users]
+[pyGFCatalog] ..> [catalog]
+[pyGFCatalog] ..> [consoles]
+[pyGFCatalog] ..> [users]
+[pyGFAccess] ..> [users]
+[pyGFUsers] ..> [catalog]
+[pyGFUsers] ..> [users]
+[pyGFUsers] ..> [subscriptions]
+
+[pyGFAccess] --> [register]
+[pyGFAccess] --> [login]
+[pyGFAccess] --> [logout]
 
 @enduml
