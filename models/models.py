@@ -55,7 +55,7 @@ class users(db.Model):
   subscription_id = db.Column(db.Integer, db.ForeignKey('subscriptions.subscription_id'))
   access_level = db.Column(db.Integer)
 
-  def __init__(self, first_name, last_name, email, address, city, state, zip, password, subscription_id, access_level):
+  def __init__(self, first_name, last_name, email, address, city, state, zip_code, password, subscription_id, access_level):
     self.first_name = first_name
     self.last_name = last_name
     self.email = email
