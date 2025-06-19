@@ -2,7 +2,7 @@
 
 # local imports
 import seed_data
-from models.models import db
+from models.models import db, consoles, subscriptions, users
 from routes.admin import admin_bp
 from routes.catalog import catalog_bp
 from routes.users import users_bp
@@ -51,13 +51,21 @@ def seed_tables():
   console_seeds = db.session.query(consoles).count()
   if console_seeds == 0:
     seed_data.seed_consoles(db, consoles)
+  # seed subscriptions table
+  subscription_seeds = db.session.query(subscriptions).count()
+  if subscription_seeds == 0:
+    seed_data.seed_subscriptions(db, subscriptions)
+  # seed users table
+  user_seeds = db.session.query(users).count()
+  if user_seeds == 0:
+    seed_data.seed_users(db, users)
 
 # root level routes
 @app.route('/', methods=['GET', 'POST'])
 def index():
   # seed data
   logging.debug("***** checking seed data *****")
-  #seed_tables()
+  seed_tables()
   # login process
   return render_template('index.html')
 
