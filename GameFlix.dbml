@@ -9,7 +9,7 @@ table users {
   address string
   city string
   state string
-  zip int
+  zip_code int
   password string
   subscription_id int [not null]
   access_level int
