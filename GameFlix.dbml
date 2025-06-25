@@ -5,13 +5,13 @@ table users {
   user_id int [primary key]
   first_name string
   last_name string
-  email string
+  email string [not null]
   address string
   city string
   state string
   zip int
   password string
-  subscription_id int
+  subscription_id int [not null]
   access_level int
 }
 
@@ -30,8 +30,8 @@ table consoles {
 table catalog {
   game_id int [primary key]
   game_name string
-  console_id int
-  renter_id int
+  console_id int [not null]
+  renter_id int [not null]
 }
 
 // table wishlist {
