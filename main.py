@@ -69,9 +69,13 @@ def index():
   # login process
   return render_template('index.html')
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout')
 def logout():
   session.clear()  # Wipe out user and its token cache from session
+  return redirect(url_for("index"))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
   return redirect(url_for("index"))
 
 if __name__ == '__main__':
