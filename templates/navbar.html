@@ -40,8 +40,13 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
+
         <form method="POST" action="{{ url_for('logout') }}">
-          <button class="btn btn-danger" type="submit">LogOut</button>
+          {% if false %}
+            <a href="{{ url_for('logout') }}"><button class="btn btn-outline-danger" type="button">LogOut</button></a>
+          {% else %}
+            <a href="{{ url_for('login') }}"><button class="btn btn-outline-success" type="button">LogIn</button></a> or <a href="{{ url_for('register') }}"><button class="btn btn-outline-primary" type="button">Register</button></a>
+          {% endif %}
         </form>
       </div>
     </div>
