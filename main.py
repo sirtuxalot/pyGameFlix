@@ -11,8 +11,10 @@ from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import json
 import logging
 import os
+import requests
 
 # read environment file
 load_dotenv()
@@ -61,13 +63,30 @@ def seed_tables():
     seed_data.seed_users(db, users)
 
 # root level routes
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def index():
   # seed data
   logging.debug("***** checking seed data *****")
   seed_tables()
   # login process
   return render_template('index.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+  email = 'my0106@proton.me'
+  password = 'dumbpass'
+  endpoint = "http://localhost:5001/login"
+  credentials = {
+    'email': email,
+    'password': password
+  }
+  headers = {
+    'Content-type': 'application/json',
+    'Accept': 'text/plain'
+  }
+  login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
+  logging.debug(login_request)
+  return redirect(url_for("index"))
 
 @app.route('/logout')
 def logout():
