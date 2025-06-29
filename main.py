@@ -3,18 +3,17 @@
 # local imports
 import seed_data
 from models.models import db, consoles, subscriptions, users
+from routes.access import access_bp
 from routes.admin import admin_bp
 from routes.catalog import catalog_bp
 from routes.users import users_bp
 # external imports
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import json
 import logging
 import os
-import requests
 
 # read environment file
 load_dotenv()
@@ -43,6 +42,7 @@ db.init_app(app)
 Migrate(app, db, compare_type=True)
 
 ### blueprints
+app.register_blueprint(access_bp, url_prefix='/access')
 app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(catalog_bp, url_prefix='/catalog')
 app.register_blueprint(users_bp, url_prefix='/users')
@@ -70,32 +70,6 @@ def index():
   seed_tables()
   # login process
   return render_template('index.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-  email = 'my0106@proton.me'
-  password = 'dumbpass'
-  endpoint = "http://localhost:5001/login"
-  credentials = {
-    'email': email,
-    'password': password
-  }
-  headers = {
-    'Content-type': 'application/json',
-    'Accept': 'text/plain'
-  }
-  login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
-  logging.debug(login_request)
-  return redirect(url_for("index"))
-
-@app.route('/logout')
-def logout():
-  session.clear()  # Wipe out user and its token cache from session
-  return redirect(url_for("index"))
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-  return redirect(url_for("index"))
 
 if __name__ == '__main__':
   if venv_var is not None:
