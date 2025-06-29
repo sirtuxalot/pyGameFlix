@@ -41,11 +41,11 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> -->
 
-        <form method="POST" action="{{ url_for('logout') }}">
+        <form method="POST">
           {% if false %}
-            <a href="{{ url_for('logout') }}"><button class="btn btn-outline-danger" type="button">LogOut</button></a>
+            <a href="{{ url_for('access.logout') }}"><button class="btn btn-outline-danger" type="button">LogOut</button></a>
           {% else %}
-            <a href="{{ url_for('login') }}"><button class="btn btn-outline-success" type="button">LogIn</button></a> or <a href="{{ url_for('register') }}"><button class="btn btn-outline-primary" type="button">Register</button></a>
+            <a href="{{ url_for('access.login') }}"><button class="btn btn-outline-success" type="button">LogIn</button></a> &nbsp; or &nbsp; <a href="{{ url_for('access.register') }}"><button class="btn btn-outline-primary" type="button">Register</button></a>
           {% endif %}
         </form>
       </div>
