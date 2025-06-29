@@ -15,6 +15,7 @@ flask-mysqldb = "*"
 psycopg2-binary = "*"
 uwsgi = "*"
 requests = "*"
+email-validator = "*"
 
 [dev-packages]
 cffi = "*"
