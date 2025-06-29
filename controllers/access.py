@@ -39,8 +39,10 @@ class RegistrationForm(FlaskForm):
 ## functions
 
 def login():
+  # initialize the form variable
   form = LoginForm()
   if form.validate_on_submit():
+    # generate variables used with the json request
     endpoint = "http://localhost:5001/login"
     credentials = {
       'email': form.email.data,
@@ -50,9 +52,12 @@ def login():
       'Content-type': 'application/json',
       'Accept': 'text/plain'
     }
+    # construct and send the user login post request
     login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
     logging.debug(login_request)
+    # redirect user to index afer successful login
     return redirect(url_for("index"))
+  # open the loginform to be filled out by the user
   return render_template('access/login.html', form=form)
 
 def logout():
@@ -60,11 +65,14 @@ def logout():
   return redirect(url_for("index"))
 
 def register():
+  # initialize form variable
   form = RegistrationForm()
+  # generate subscription choices from suscriptions table
   form.subscription.choices = [('0', 'Select Subscription Plan')] + [(subscription.subscription_id, subscription.subscription_name
     ) for subscription in subscriptions.query.order_by(subscriptions.subscription_id
     ).filter(subscriptions.subscription_name.not_like('-- Select Subscription --'))]
   if form.validate_on_submit():
+    # generate variables used with the json request
     endpoint = "http://localhost:5001/register"
     newUser = {
       'first_name': form.first_name.data,
@@ -82,7 +90,10 @@ def register():
       'Content-type': 'application/json',
       'Accept': 'text/plain'
     }
+    # construct and send the new user post request
     new_user_request = requests.post(endpoint, data=json.dumps(newUser), headers=headers)
     logging.debug(new_user_request)
+    # redirect user to login form after successful registration
     return redirect(url_for('access.login'))
+  # open the register form to be filled out by the user
   return render_template('access/register.html', form=form)
