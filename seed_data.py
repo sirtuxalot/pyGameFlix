@@ -36,7 +36,7 @@ def seed_subscriptions(db_server, subscription_db):
 # user seed data
 def seed_users(db_server, users_db):
   user_objects = [
-    users_db(first_name='App', last_name='Admin', email='appadmin@ist412.io', address='17 Maxwell Road', city='Ruby Ridge', state='PA', zip_code=17745, password='1$VWDWKO3SQhZ53Hrg$bd7aeb560e215120e0892c4ab570ecc50eed1384eabba28c4cb7f7762e897c0364a67d13b46bf0595b180eee28a2b290480c00903818894e0487e01541e850c9', subscription_id=1, access_level=1),
+    users_db(first_name='App', last_name='Admin', email='appadmin@ist412.io', address='17 Maxwell Road', city='Ruby Ridge', state='PA', zip_code=17745, password='scrypt:32768:8:1$7Tiopg5bvapx36dx$4358fc6cd2fd51cc84bc53f82e8514e122a81e920dabe42ab87b57eb33467a123baa43ca3ef02f3a835928980ee7671c293c81d829f53241271b1cc5b1c1215b', subscription_id=1, access_level=1),
   ]
   db_server.session.add_all(user_objects)
   db_server.session.commit()
