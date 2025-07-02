@@ -5,7 +5,7 @@ from models.models import db, users, subscriptions
 # external imports
 from flask import redirect, render_template, url_for
 from flask_wtf import FlaskForm
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import generate_password_hash
 from wtforms import PasswordField, SelectField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 import json
