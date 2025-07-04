@@ -16,6 +16,8 @@ psycopg2-binary = "*"
 uwsgi = "*"
 requests = "*"
 email-validator = "*"
+flask-bcrypt = "*"
+bcrypt = "*"
 
 [dev-packages]
 cffi = "*"
