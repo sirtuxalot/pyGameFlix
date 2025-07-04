@@ -5,15 +5,17 @@ from models.models import db, users, subscriptions
 # external imports
 from flask import redirect, render_template, url_for
 from flask_wtf import FlaskForm
-from werkzeug.security import generate_password_hash
+from flask_bcrypt import Bcrypt
 from wtforms import PasswordField, SelectField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 import json
 import logging
 import requests
 
-## forms
+## settings
+bcrypt = Bcrypt()
 
+## forms
 class LoginForm(FlaskForm):
   email = StringField('E-mail:', validators=[DataRequired(), Email()])
   password = PasswordField('Password: ', validators=[DataRequired()])
@@ -37,7 +39,6 @@ class RegistrationForm(FlaskForm):
       raise ValidationError('Your e-mail has already been registered.')
 
 ## functions
-
 def login():
   # initialize the form variable
   form = LoginForm()
@@ -46,7 +47,7 @@ def login():
     endpoint = "http://localhost:5001/login"
     credentials = {
       'email': form.email.data,
-      'password': generate_password_hash(form.password.data),
+      'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
     }
     headers = {
       'Content-type': 'application/json',
@@ -54,7 +55,6 @@ def login():
     }
     # construct and send the user login post request
     login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
-    logging.debug(login_request)
     # redirect user to index afer successful login
     return redirect(url_for("index"))
   # open the loginform to be filled out by the user
@@ -82,7 +82,7 @@ def register():
       'state': form.state.data,
       'zip_code': form.zip_code.data,
       'email': form.email.data,
-      'password': generate_password_hash(form.password.data),
+      'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
       'subscription_id': form.subscription.data,
       'access_level': 99
     }
@@ -92,7 +92,6 @@ def register():
     }
     # construct and send the new user post request
     new_user_request = requests.post(endpoint, data=json.dumps(newUser), headers=headers)
-    logging.debug(new_user_request)
     # redirect user to login form after successful registration
     return redirect(url_for('access.login'))
   # open the register form to be filled out by the user
