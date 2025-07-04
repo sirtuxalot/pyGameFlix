@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/use-case--diagram
+
+left to right direction
+skinparam actorStyle awesome
+
+:End User:
+
+:Admin User:
+
+package GameFlix {
+  usecase Login
+  usecase "Show Catalog"
+  usecase "Edit Catalog"
+  usecase "Invalid Login"
+}
+
+rectangle MySql
+
+"Edit Catalog" -> Login : include
+"Show Catalog" -> Login : include
+"Invalid Login" -> Login : extend
+"End User" -- "Show Catalog"
+"Admin User" -- "Edit Catalog"
+MySql -- Login
+MySql -- "Edit Catalog"
+MySql -- "Show Catalog"
+
+@enduml
