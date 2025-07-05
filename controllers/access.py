@@ -55,6 +55,8 @@ def login():
     }
     # construct and send the user login post request
     login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
+    userProfile = login_request.json()
+    logging.debug(userProfile)
     # redirect user to index afer successful login
     return redirect(url_for("index"))
   # open the loginform to be filled out by the user
@@ -92,6 +94,8 @@ def register():
     }
     # construct and send the new user post request
     new_user_request = requests.post(endpoint, data=json.dumps(newUser), headers=headers)
+    userProfile = new_user_request.json
+    logging.debug(userProfile)
     # redirect user to login form after successful registration
     return redirect(url_for('access.login'))
   # open the register form to be filled out by the user
