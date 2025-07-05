@@ -18,6 +18,8 @@ requests = "*"
 email-validator = "*"
 flask-bcrypt = "*"
 bcrypt = "*"
+pyjwt = "*"
+cryptography = "*"
 
 [dev-packages]
 cffi = "*"
