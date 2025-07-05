@@ -3,12 +3,15 @@
 # internal imports
 from models.models import db, users, subscriptions  
 # external imports
+from cryptography.x509 import load_pem_x509_certificate
 from flask import redirect, render_template, url_for
 from flask_wtf import FlaskForm
 from flask_bcrypt import Bcrypt
+from pathlib import Path
 from wtforms import PasswordField, SelectField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 import json
+import jwt
 import logging
 import requests
 
@@ -39,6 +42,17 @@ class RegistrationForm(FlaskForm):
       raise ValidationError('Your e-mail has already been registered.')
 
 ## functions
+def validate_jwt(token):
+  unverified_headers = jwt.get_unverified_header(token)
+  x509_certificate = load_pem_x509_certificate(
+    Path("keys/public_key.pem").read_text().encode()
+  ).public_key()
+  return jwt.decode(
+    token,
+    key=x509_certificate,
+    algorithms=unverified_headers["alg"],
+  )
+
 def login():
   # initialize the form variable
   form = LoginForm()
@@ -57,6 +71,7 @@ def login():
     login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
     userProfile = login_request.json()
     logging.debug(userProfile)
+    logging.debug(validate_jwt(userProfile["jwt_token"]))
     # redirect user to index afer successful login
     return redirect(url_for("index"))
   # open the loginform to be filled out by the user
