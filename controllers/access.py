@@ -1,47 +1,22 @@
 # controllers/access.py
 
 # internal imports
+from .forms import LoginForm, RegistrationForm
 from models.models import db, users, subscriptions  
 # external imports
+import base64
 from cryptography.x509 import load_pem_x509_certificate
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
 from flask import redirect, render_template, url_for
-from flask_wtf import FlaskForm
-from flask_bcrypt import Bcrypt
 from pathlib import Path
-from wtforms import PasswordField, SelectField, StringField, SubmitField, ValidationError
-from wtforms.validators import DataRequired, Email, EqualTo
 import json
 import jwt
 import logging
 import requests
 
-## settings
-bcrypt = Bcrypt()
+# support functions
 
-## forms
-class LoginForm(FlaskForm):
-  email = StringField('E-mail:', validators=[DataRequired(), Email()])
-  password = PasswordField('Password: ', validators=[DataRequired()])
-  submit = SubmitField('Login')
-
-class RegistrationForm(FlaskForm):
-  first_name = StringField('First Name: ', validators=[DataRequired()])
-  last_name = StringField('Last Name: ', validators=[DataRequired()])
-  address = StringField('Street Address: ', validators=[DataRequired()])
-  city = StringField('City: ', validators=[DataRequired()])
-  state = StringField('State: ', validators=[DataRequired()])
-  zip_code = StringField('Zip Code: ', validators=[DataRequired()])
-  email = StringField('E-mail: ', validators=[DataRequired(), Email()])
-  password = PasswordField('Password: ', validators=[DataRequired(), EqualTo('confirm_password', message='Passwords must match!')])
-  confirm_password = PasswordField('Confirm Password: ', validators=[DataRequired()])
-  subscription = SelectField('Subscription', choices=[], default=0)
-  submit = SubmitField('Create User')
-
-  def check_email(self, field):
-    if users.query.filter_by(email=field.data).first():
-      raise ValidationError('Your e-mail has already been registered.')
-
-## functions
 def validate_jwt(token):
   unverified_headers = jwt.get_unverified_header(token)
   x509_certificate = load_pem_x509_certificate(
@@ -53,6 +28,17 @@ def validate_jwt(token):
     algorithms=unverified_headers["alg"],
   )
 
+def load_public_key():
+  with open('keys/public_key.pem', 'rb') as pem_file:
+    public_key = serialization.load_pem_public_key(pem_file.read())
+  return public_key
+
+def encrypt_password(message, public_key):
+  encrypted = public_key.encrypt(message.encode('utf-8'), padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
+  return base64.b64encode(encrypted).decode('utf-8')
+
+# access functions
+
 def login():
   # initialize the form variable
   form = LoginForm()
@@ -61,7 +47,7 @@ def login():
     endpoint = "http://localhost:5001/login"
     credentials = {
       'email': form.email.data,
-      'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+      'password': encrypt_password(form.password.data, load_public_key())
     }
     headers = {
       'Content-type': 'application/json',
@@ -71,7 +57,7 @@ def login():
     login_request = requests.post(endpoint, data=json.dumps(credentials), headers=headers)
     userProfile = login_request.json()
     logging.debug(userProfile)
-    logging.debug(validate_jwt(userProfile["jwt_token"]))
+    #logging.debug(validate_jwt(userProfile['jwt_token']))
     # redirect user to index afer successful login
     return redirect(url_for("index"))
   # open the loginform to be filled out by the user
