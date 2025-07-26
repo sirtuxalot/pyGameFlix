@@ -1,48 +1,35 @@
   <nav class="navbar navbar-default navbar-expand-lg">
     <div class="container-fluid">
       <form>
-        <img src={{ url_for('static', filename='img/python.png') }}> pyGameFlix
+        <a href="{{ url_for('index') }}"><img src={{ url_for('static', filename='img/python.png') }}></a> pyGameFlix
       </form>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('catalog.index') }}">Catalog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('users.index') }}">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url_for('admin.index') }}">Admin</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li> -->
+          {% if session['jwt_token'] != Nil %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ url_for('catalog.index') }}">Catalog</a>
+            </li>
+          {% endif %}
+          {% if session['access_level'] == 1 %}
+            <li class="nav-item dropdown">
+              <a class="nav-link active" aria-current="page" href="{{ url_for('admin.index') }}">Admin</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Catalog</a></li>
+                <li><a class="dropdown-item" href="#">Consoles</a></li>
+                <li><a class="dropdown-item" href="#">Subscriptions</a></li>
+                <li><a class="dropdown-item" href="#">Users</a></li>
+              </ul>
+            </li>
+          {% endif %}
         </ul>
-        <!-- <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form> -->
 
         <form method="POST">
-          {% if false %}
+          {% if session['jwt_token'] != Nil %}
+            <a href="{{ url_for('users.profile', user_id=session['user_id']) }}"><img src={{ url_for('static', filename='img/profile.png') }}></a>
             <a href="{{ url_for('access.logout') }}"><button class="btn btn-outline-danger" type="button">LogOut</button></a>
           {% else %}
             <a href="{{ url_for('access.login') }}"><button class="btn btn-outline-success" type="button">LogIn</button></a> &nbsp; or &nbsp; <a href="{{ url_for('access.register') }}"><button class="btn btn-outline-primary" type="button">Register</button></a>
