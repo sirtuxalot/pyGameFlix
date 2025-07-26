@@ -4,4 +4,4 @@
 from flask import render_template
 
 def index():
-  return render_template('catalog.html')
+  return render_template('catalog/catalog.html')

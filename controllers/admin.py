@@ -4,4 +4,4 @@
 from flask import render_template
 
 def index():
-  return render_template('admin.html')
+  return render_template('admin/admin.html')
