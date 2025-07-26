@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block body_content %}
   <div class="container">
-    <h1>pyGameFlix - Register</h1>
-    <h2>IST 412 - Summer 2025</h2>
+    <h1>{{ message }}</h1>
     <hr>
     <div class="container">
       <form method="POST">
         {{form.hidden_tag()}}
         <fieldset class="form-group">
-          <legend class="border-bottom md-4">Complete form to join GameFlix:</legend>
+          <legend class="border-bottom md-4"></legend>
 
           <div class="row">
             <div class="form-group col-md-3" id="first_name">
