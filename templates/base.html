@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.3/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.2.2/bootstrap.min.css') }}">
     {% block css_content %} {% endblock %}
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
     <title>GameFlix Python Project</title>
@@ -12,7 +12,8 @@
   <body>
   {% include 'navbar.html' %}
   {% block body_content %} {% endblock %}
-  <script src="{{ url_for('static', filename='bootstrap-5.3.3/js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='popper-2.11.6/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap-5.2.2/bootstrap.min.js') }}"></script>
   {% block js_content %} {% endblock %}
   </body>
 </html>
