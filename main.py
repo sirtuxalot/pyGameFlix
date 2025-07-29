@@ -9,7 +9,7 @@ from routes.catalog import catalog_bp
 from routes.users import users_bp
 # external imports
 from dotenv import load_dotenv
-from flask import Flask, render_template, session
+from flask import Flask, redirect, render_template, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import logging
@@ -65,11 +65,21 @@ def seed_tables():
 # root level routes
 @app.route('/')
 def index():
+#  venv_var = os.getenv('VIRTUAL_ENV', default=None)
+#  if venv_var is not None:
+#    logging.debug(session)
+#  if "jwt_token" not in session:
+#    return redirect(url_for("access.login"))
   # seed data
   logging.debug("***** checking seed data *****")
   seed_tables()
   # login process
-  return render_template('index.html')
+  #if session != None:
+  #  return render_template('index.html', user="%s, %s" % (session["last_name"],session['first_name']))
+  #else:
+  #  return render_template('index.html', user="")
+  logging.debug(session)
+  return render_template('index.html', user="")
 
 if __name__ == '__main__':
   if venv_var is not None:
