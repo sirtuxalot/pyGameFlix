@@ -12,8 +12,8 @@
   <body>
   {% include 'navbar.html' %}
   {% block body_content %} {% endblock %}
-  <script src="{{ url_for('static', filename='popper-2.11.6/popper.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='bootstrap-5.2.2/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper-2.11.6/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap-5.2.2/bootstrap.min.js') }}"></script>
   {% block js_content %} {% endblock %}
   </body>
 </html>
