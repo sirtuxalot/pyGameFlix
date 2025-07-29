@@ -41,3 +41,23 @@ class ProfileForm(FlaskForm):
   email = StringField('E-mail: ', validators=[DataRequired(), Email()])
   subscription = SelectField('Subscription', choices=[])
   submit = SubmitField('Update User')
+
+## admin game form
+
+class GameForm(FlaskForm):
+  pass
+
+## admin console form
+
+class ConsoleForm(FlaskForm):
+  pass
+
+## admin subscription form
+
+class SubscriptionForm(FlaskForm):
+  pass
+
+## admin user form
+
+class UserForm(FlaskForm):
+  pass

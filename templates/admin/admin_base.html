@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+  {% block css_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='simpledatatables-9.2.2/style.css') }}">
+    {% block admin_css_content %} {% endblock %}
+  {%endblock%}
+
+  {% block body_content %}
+    <div class="container">
+      <h1>Admin Index</h1>
+    </div>
+  {%endblock%}
+  
+  {% block js_content %}
+    <script src="{{ url_for('static', filename='simpledatatables-9.2.2/simple-datatables.js') }}"></script>
+    {% block admin_js_content %} {% endblock %}
+  {%endblock%}
