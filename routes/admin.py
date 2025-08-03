@@ -1,7 +1,10 @@
 # routes/admin.py
 
 # internal imports
-from controllers.admin import index, show_catalog, show_consoles, show_subscriptions, show_users, edit_game, edit_console, edit_subscription, edit_user
+from controllers.admin_catalog import index, show_catalog, edit_game
+from controllers.admin_consoles import show_consoles, edit_console
+from controllers.admin_subscriptions import show_subscriptions, edit_subscription
+from controllers.admin_users import show_users, edit_user
 # external imports
 from flask import Blueprint
 
