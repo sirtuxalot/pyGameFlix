@@ -73,11 +73,6 @@ def login():
       session["zip_code"] = userProfile['zip_code']
     else:
       return render_template('access/login.html', denied=userProfile['message'], message="Please login to GameFlix", form=form)
-    
-
-
-
-    #logging.debug(session)
     # redirect user to index afer successful login
     return redirect(url_for("index"))
   # open the loginform to be filled out by the user
@@ -105,7 +100,7 @@ def register():
       'state': form.state.data,
       'zip_code': form.zip_code.data,
       'email': form.email.data,
-      'password': bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+      'password': encrypt_password(form.password.data, load_public_key()),
       'subscription_id': form.subscription.data,
       'access_level': 99
     }
