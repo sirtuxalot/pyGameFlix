@@ -42,6 +42,13 @@ class ProfileForm(FlaskForm):
   subscription = SelectField('Subscription', choices=[])
   submit = SubmitField('Update User')
 
+## change password form
+
+class ChangePwdForm(FlaskForm):
+  password = PasswordField('Password: ', validators=[DataRequired(), EqualTo('confirm_password', message='Passwords must match!')])
+  confirm_password = PasswordField('Confirm Password: ', validators=[DataRequired()])
+  submit = SubmitField('Update Password')
+
 ## admin game form
 
 class GameForm(FlaskForm):
