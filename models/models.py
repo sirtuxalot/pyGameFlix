@@ -54,8 +54,9 @@ class users(db.Model):
   password = db.Column(db.Text)
   subscription_id = db.Column(db.Integer, db.ForeignKey('subscriptions.subscription_id'), nullable=False)
   access_level = db.Column(db.Integer)
+  enabled = db.Column(db.Boolean)
 
-  def __init__(self, first_name, last_name, email, address, city, state, zip_code, password, subscription_id, access_level):
+  def __init__(self, first_name, last_name, email, address, city, state, zip_code, password, subscription_id, access_level, enabled):
     self.first_name = first_name
     self.last_name = last_name
     self.email = email
@@ -66,3 +67,4 @@ class users(db.Model):
     self.password = password
     self.subscription_id = subscription_id
     self.access_level = access_level
+    self.enabled = enabled
