@@ -1,0 +1,40 @@
+  {% extends "admin/admin_base.html" %}
+
+  {% block body_content %}
+    <div class="container">
+      <form method="POST">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+
+          <legend class="border-bottom md-4">Edit Subscription:</legend>
+          <div class="row">
+            <div class="form-group col-md-3" id="subscription_name">
+              {% if form.subscription_name.errors %} {{ form.subscription_name(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.subscription_name.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.subscription_name(class="form-control form-control-sm") }} {% endif %}
+            </div>
+            <div class="form-group col-md-1" id="rentals_allowed">
+              {% if form.rentals_allowed.errors %} {{ form.rentals_allowed(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.rentals_allowed.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.rentals_allowed(class="form-control form-control-sm") }} {% endif %}
+            </div>
+            <div class="form-group col-md-1" id="price">
+              {% if form.price.errors %} {{ form.price(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.price.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.price(class="form-control form-control-sm") }} {% endif %}
+            </div>
+            <div class="form-group col-md-2" id="submit">
+              {{ form.submit(class="btn btn-outline-success btn-sm") }}
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  {%endblock%}

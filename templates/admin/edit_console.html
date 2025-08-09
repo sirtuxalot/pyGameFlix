@@ -1,0 +1,26 @@
+  {% extends "admin/admin_base.html" %}
+  
+  {% block body_content %}
+    <div class="container">
+      <form method="POST">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+
+          <legend class="border-bottom md-4">Edit Console:</legend>
+          <div class="row">
+            <div class="form-group col-md-3" id="console_name">
+              {% if form.console_name.errors %} {{ form.console_name(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.console_name.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.console_name(class="form-control form-control-sm") }} {% endif %}
+            </div>
+            <div class="form-group col-md-2" id="submit">
+              {{ form.submit(class="btn btn-outline-success btn-sm") }}
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  {%endblock%}

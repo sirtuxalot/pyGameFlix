@@ -2,12 +2,32 @@
   
   {% block body_content %}
     <div class="container">
+      <form method="POST">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+
+          <legend class="border-bottom md-4">Add Console:</legend>
+          <div class="row">
+            <div class="form-group col-md-3" id="console_name">
+              {% if form.console_name.errors %} {{ form.console_name(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.console_name.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.console_name(class="form-control form-control-sm", value="") }} {% endif %}
+            </div>
+            <div class="form-group col-md-2" id="submit">
+              {{ form.submit(class="btn btn-outline-success btn-sm") }}
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
       <legend class="border-bottom md-4">Consoles</legend>
       <table class="table table-striped table-hover" id="consoles">
         <thead>
           <tr>
             <th>Console</th>
-            <th>Delete</th>
+            <th>Game Count</th>
           </tr>
         </thead>
         <tbody>
@@ -17,7 +37,11 @@
               <a href="{{ url_for('admin.edit_console', console_id=console.console_id) }}"><button type="button" class="btn btn-outline-primary btn-sm" aria-pressed="true"><b>{{ console['console_name']|safe }}</b></button>
             </td>
             <td>
-              <button class="btn btn-outline-danger btn-sm" id="del_modal-{{ console['console_id'] }}"><b>{{ console['console_name']|safe }}</b></button>
+              {% if console['game_count'] == 0 %}
+                None
+              {% else %}
+                {{ console['game_count']|safe }}
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

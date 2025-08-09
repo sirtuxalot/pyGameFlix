@@ -2,6 +2,40 @@
 
   {% block body_content %}
     <div class="container">
+      <form method="POST">
+        {{form.hidden_tag()}}
+        <fieldset class="form-group">
+
+          <legend class="border-bottom md-4">Add Subscription:</legend>
+          <div class="row">
+            <div class="form-group col-md-3" id="subscription_name">
+              {% if form.subscription_name.errors %} {{ form.subscription_name(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.subscription_name.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.subscription_name(class="form-control form-control-sm", value="") }} {% endif %}
+            </div>
+            <div class="form-group col-md-1" id="rentals_allowed">
+              {% if form.rentals_allowed.errors %} {{ form.rentals_allowed(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.rentals_allowed.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.rentals_allowed(class="form-control form-control-sm", value="") }} {% endif %}
+            </div>
+            <div class="form-group col-md-1" id="price">
+              {% if form.price.errors %} {{ form.price(class="form-control form-control-sm is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.price.errors %} <span>{{ error }}</span> {% endfor %}
+                </div>
+              {% else %} {{ form.price(class="form-control form-control-sm", value="") }} {% endif %}
+            </div>
+            <div class="form-group col-md-2" id="submit">
+              {{ form.submit(class="btn btn-outline-success btn-sm") }}
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
       <legend class="border-bottom md-4">Subscriptions</legend>
       <table class="table table-striped table-hover" id="subscriptions">
         <thead>
@@ -9,7 +43,6 @@
             <th>Subscription</th>
             <th>Rentals Allowed</th>
             <th>Monthly Cost</th>
-            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -23,9 +56,6 @@
             </td>
             <td>
               {{ subscription['price']|safe }}
-            </td>
-            <td>
-              <button class="btn btn-outline-danger btn-sm" id="del_modal-{{ subscription['subscription_id'] }}"><b>{{ subscription['subscription_name']|safe }}</b></button>
             </td>
           </tr>
         {% endfor %}
