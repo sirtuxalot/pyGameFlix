@@ -4,7 +4,7 @@
 from controllers.admin_catalog import index, show_catalog, edit_game
 from controllers.admin_consoles import show_consoles, edit_console
 from controllers.admin_subscriptions import show_subscriptions, edit_subscription
-from controllers.admin_users import show_users, edit_user
+from controllers.admin_users import set_permission, show_users
 # external imports
 from flask import Blueprint
 
@@ -22,4 +22,4 @@ admin_bp.route('/users', methods=['GET', 'POST'])(show_users)
 admin_bp.route('/game/<int:game_id>', methods=['GET', 'POST'])(edit_game)
 admin_bp.route('/console/<int:console_id>', methods=['GET', 'POST'])(edit_console)
 admin_bp.route('/subscription/<int:subscription_id>', methods=['GET', 'POST'])(edit_subscription)
-admin_bp.route('/users/<int:user_id>', methods=['GET', 'POST'])(edit_user)
+admin_bp.route('/permissions/<int:user_id>', methods=['GET', 'POST'])(set_permission)

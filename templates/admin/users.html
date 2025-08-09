@@ -9,23 +9,39 @@
             <th>User</th>
             <th>Email</th>
             <th>Subscription</th>
-            <th>Delete</th>
+            <th>Enabled</th>
+            <th>Access Level</th>
           </tr>
         </thead>
         <tbody>
         {% for user in users %}
           <tr>
             <td>
-              <a href="{{ url_for('admin.edit_user', user_id=user.user_id) }}"><button type="button" class="btn btn-outline-primary btn-sm" aria-pressed="true"><b>{{ user['last_name']|safe }}, {{ user['first_name']|safe }}</b></button>
+              {{ user['last_name']|safe }}, {{ user['first_name']|safe }}
             </td>
             <td>
               {{ user['email']|safe }}
             </td>
             <td>
-              {{ user['subscription_name']|safe }}
+              {% if user['subscription_name'] == '-- Select Subscription --' %}
+                Not Set
+              {% else %}
+                {{ user['subscription_name']|safe }}
+              {% endif %}
             </td>
             <td>
-              <button class="btn btn-outline-danger btn-sm" id="del_modal-{{ user['user_id'] }}"><b>{{ user['access_level']|safe }}</b></button>
+              {% if user.access_level != 1 %}
+                {% if user.enabled != True: %}
+                  <a href="{{ url_for('admin.set_permission', user_id=user.user_id) }}"><button class="btn btn-outline-danger btn-sm" id="del_modal-{{ user['user_id'] }}"><b>False</b></button></a>
+                {% else %}
+                  <a href="{{ url_for('admin.set_permission', user_id=user.user_id) }}"><button class="btn btn-outline-success btn-sm" id="del_modal-{{ user['user_id'] }}"><b>True</b></button></a>
+                {% endif %}
+              {% endif %}
+            </td>
+            <td>
+              {% if user.access_level != 1 %}
+                <button class="btn btn-outline-danger btn-sm" id="del_modal-{{ user['user_id'] }}"><b>{{ user['access_level']|safe }}</b></button>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}
