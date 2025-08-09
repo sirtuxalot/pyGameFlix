@@ -10,7 +10,7 @@ db=SQLAlchemy()
 class consoles(db.Model):
   __tablename__ = 'consoles'
   console_id = db.Column(db.Integer, primary_key=True)
-  console_name = db.Column(db.Text)
+  console_name = db.Column(db.Text, unique=True, nullable=False)
 
   def __init__(self, console_name):
     self.console_name = console_name
@@ -18,7 +18,7 @@ class consoles(db.Model):
 class subscriptions(db.Model):
   __tablename__ = 'subscriptions'
   subscription_id = db.Column(db.Integer, primary_key=True)
-  subscription_name = db.Column(db.Text)
+  subscription_name = db.Column(db.Text, unique=True, nullable=False)
   rentals_allowed = db.Column(db.Integer)
   price = db.Column(db.Text)
 
